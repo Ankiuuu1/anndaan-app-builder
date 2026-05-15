@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import type { LinkProps } from "@tanstack/react-router";
+
 import { Home, Search, Plus, Bell, User } from "lucide-react";
 
 type Tab = {
@@ -31,7 +31,7 @@ export function BottomNav() {
           return (
             <Link
               key={to}
-              to={to}
+              to={to as never}
               className="relative flex items-center justify-center"
               aria-label={label}
             >
@@ -45,7 +45,7 @@ export function BottomNav() {
         return (
           <Link
             key={to}
-            to={to}
+            to={to as never}
             className={`flex flex-col items-center justify-center gap-1 py-2 text-[11px] font-medium transition-colors ${
               active ? "text-primary" : "text-muted-foreground hover:text-foreground"
             }`}
