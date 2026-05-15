@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Card } from "@/components/ui/card";
-import { ArrowRight, Sprout, Users } from "lucide-react";
+import { ArrowRight, Sprout, Users, Bike, ShieldAlert } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -29,6 +29,21 @@ function Home() {
             </div>
           </div>
         </section>
+
+        <div className="grid grid-cols-2 gap-3">
+          <Link to="/volunteer/dashboard" className="rounded-2xl border p-3 flex items-center gap-2 hover:border-primary/40">
+            <div className="h-9 w-9 rounded-xl bg-primary/10 text-primary grid place-items-center">
+              <Bike className="h-4 w-4" />
+            </div>
+            <div className="text-sm font-semibold">Volunteer</div>
+          </Link>
+          <Link to="/safety/emergency" className="rounded-2xl border p-3 flex items-center gap-2 hover:border-destructive/40">
+            <div className="h-9 w-9 rounded-xl bg-destructive/10 text-destructive grid place-items-center">
+              <ShieldAlert className="h-4 w-4" />
+            </div>
+            <div className="text-sm font-semibold">Safety</div>
+          </Link>
+        </div>
 
         <section>
           <div className="flex items-center justify-between mb-2">

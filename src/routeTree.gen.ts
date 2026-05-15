@@ -14,9 +14,23 @@ import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PostRouteImport } from './routes/post'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as NotificationsRouteImport } from './routes/notifications'
+import { Route as HelpRouteImport } from './routes/help'
 import { Route as DiscoverRouteImport } from './routes/discover'
+import { Route as BookingsRouteImport } from './routes/bookings'
 import { Route as ActivityRouteImport } from './routes/activity'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as VolunteerRequestsRouteImport } from './routes/volunteer.requests'
+import { Route as VolunteerDashboardRouteImport } from './routes/volunteer.dashboard'
+import { Route as SettingsNotificationsRouteImport } from './routes/settings.notifications'
+import { Route as SafetyEmergencyRouteImport } from './routes/safety.emergency'
+import { Route as ProfileSetupRouteImport } from './routes/profile.setup'
+import { Route as ProfileEditRouteImport } from './routes/profile.edit'
+import { Route as FoodPostedRouteImport } from './routes/food.posted'
+import { Route as BookingConfirmRouteImport } from './routes/booking.confirm'
+import { Route as AuthSignupRouteImport } from './routes/auth.signup'
+import { Route as AuthOtpRouteImport } from './routes/auth.otp'
+import { Route as AuthLoginRouteImport } from './routes/auth.login'
+import { Route as FoodDetailsIdRouteImport } from './routes/food.details.$id'
 
 const SplashRoute = SplashRouteImport.update({
   id: '/splash',
@@ -43,9 +57,19 @@ const NotificationsRoute = NotificationsRouteImport.update({
   path: '/notifications',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HelpRoute = HelpRouteImport.update({
+  id: '/help',
+  path: '/help',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DiscoverRoute = DiscoverRouteImport.update({
   id: '/discover',
   path: '/discover',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookingsRoute = BookingsRouteImport.update({
+  id: '/bookings',
+  path: '/bookings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ActivityRoute = ActivityRouteImport.update({
@@ -58,80 +82,236 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VolunteerRequestsRoute = VolunteerRequestsRouteImport.update({
+  id: '/volunteer/requests',
+  path: '/volunteer/requests',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VolunteerDashboardRoute = VolunteerDashboardRouteImport.update({
+  id: '/volunteer/dashboard',
+  path: '/volunteer/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsNotificationsRoute = SettingsNotificationsRouteImport.update({
+  id: '/settings/notifications',
+  path: '/settings/notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SafetyEmergencyRoute = SafetyEmergencyRouteImport.update({
+  id: '/safety/emergency',
+  path: '/safety/emergency',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileSetupRoute = ProfileSetupRouteImport.update({
+  id: '/setup',
+  path: '/setup',
+  getParentRoute: () => ProfileRoute,
+} as any)
+const ProfileEditRoute = ProfileEditRouteImport.update({
+  id: '/edit',
+  path: '/edit',
+  getParentRoute: () => ProfileRoute,
+} as any)
+const FoodPostedRoute = FoodPostedRouteImport.update({
+  id: '/food/posted',
+  path: '/food/posted',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookingConfirmRoute = BookingConfirmRouteImport.update({
+  id: '/booking/confirm',
+  path: '/booking/confirm',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthSignupRoute = AuthSignupRouteImport.update({
+  id: '/auth/signup',
+  path: '/auth/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthOtpRoute = AuthOtpRouteImport.update({
+  id: '/auth/otp',
+  path: '/auth/otp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthLoginRoute = AuthLoginRouteImport.update({
+  id: '/auth/login',
+  path: '/auth/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FoodDetailsIdRoute = FoodDetailsIdRouteImport.update({
+  id: '/food/details/$id',
+  path: '/food/details/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/activity': typeof ActivityRoute
+  '/bookings': typeof BookingsRoute
   '/discover': typeof DiscoverRoute
+  '/help': typeof HelpRoute
   '/notifications': typeof NotificationsRoute
   '/onboarding': typeof OnboardingRoute
   '/post': typeof PostRoute
-  '/profile': typeof ProfileRoute
+  '/profile': typeof ProfileRouteWithChildren
   '/splash': typeof SplashRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/otp': typeof AuthOtpRoute
+  '/auth/signup': typeof AuthSignupRoute
+  '/booking/confirm': typeof BookingConfirmRoute
+  '/food/posted': typeof FoodPostedRoute
+  '/profile/edit': typeof ProfileEditRoute
+  '/profile/setup': typeof ProfileSetupRoute
+  '/safety/emergency': typeof SafetyEmergencyRoute
+  '/settings/notifications': typeof SettingsNotificationsRoute
+  '/volunteer/dashboard': typeof VolunteerDashboardRoute
+  '/volunteer/requests': typeof VolunteerRequestsRoute
+  '/food/details/$id': typeof FoodDetailsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/activity': typeof ActivityRoute
+  '/bookings': typeof BookingsRoute
   '/discover': typeof DiscoverRoute
+  '/help': typeof HelpRoute
   '/notifications': typeof NotificationsRoute
   '/onboarding': typeof OnboardingRoute
   '/post': typeof PostRoute
-  '/profile': typeof ProfileRoute
+  '/profile': typeof ProfileRouteWithChildren
   '/splash': typeof SplashRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/otp': typeof AuthOtpRoute
+  '/auth/signup': typeof AuthSignupRoute
+  '/booking/confirm': typeof BookingConfirmRoute
+  '/food/posted': typeof FoodPostedRoute
+  '/profile/edit': typeof ProfileEditRoute
+  '/profile/setup': typeof ProfileSetupRoute
+  '/safety/emergency': typeof SafetyEmergencyRoute
+  '/settings/notifications': typeof SettingsNotificationsRoute
+  '/volunteer/dashboard': typeof VolunteerDashboardRoute
+  '/volunteer/requests': typeof VolunteerRequestsRoute
+  '/food/details/$id': typeof FoodDetailsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/activity': typeof ActivityRoute
+  '/bookings': typeof BookingsRoute
   '/discover': typeof DiscoverRoute
+  '/help': typeof HelpRoute
   '/notifications': typeof NotificationsRoute
   '/onboarding': typeof OnboardingRoute
   '/post': typeof PostRoute
-  '/profile': typeof ProfileRoute
+  '/profile': typeof ProfileRouteWithChildren
   '/splash': typeof SplashRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/otp': typeof AuthOtpRoute
+  '/auth/signup': typeof AuthSignupRoute
+  '/booking/confirm': typeof BookingConfirmRoute
+  '/food/posted': typeof FoodPostedRoute
+  '/profile/edit': typeof ProfileEditRoute
+  '/profile/setup': typeof ProfileSetupRoute
+  '/safety/emergency': typeof SafetyEmergencyRoute
+  '/settings/notifications': typeof SettingsNotificationsRoute
+  '/volunteer/dashboard': typeof VolunteerDashboardRoute
+  '/volunteer/requests': typeof VolunteerRequestsRoute
+  '/food/details/$id': typeof FoodDetailsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/activity'
+    | '/bookings'
     | '/discover'
+    | '/help'
     | '/notifications'
     | '/onboarding'
     | '/post'
     | '/profile'
     | '/splash'
+    | '/auth/login'
+    | '/auth/otp'
+    | '/auth/signup'
+    | '/booking/confirm'
+    | '/food/posted'
+    | '/profile/edit'
+    | '/profile/setup'
+    | '/safety/emergency'
+    | '/settings/notifications'
+    | '/volunteer/dashboard'
+    | '/volunteer/requests'
+    | '/food/details/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/activity'
+    | '/bookings'
     | '/discover'
+    | '/help'
     | '/notifications'
     | '/onboarding'
     | '/post'
     | '/profile'
     | '/splash'
+    | '/auth/login'
+    | '/auth/otp'
+    | '/auth/signup'
+    | '/booking/confirm'
+    | '/food/posted'
+    | '/profile/edit'
+    | '/profile/setup'
+    | '/safety/emergency'
+    | '/settings/notifications'
+    | '/volunteer/dashboard'
+    | '/volunteer/requests'
+    | '/food/details/$id'
   id:
     | '__root__'
     | '/'
     | '/activity'
+    | '/bookings'
     | '/discover'
+    | '/help'
     | '/notifications'
     | '/onboarding'
     | '/post'
     | '/profile'
     | '/splash'
+    | '/auth/login'
+    | '/auth/otp'
+    | '/auth/signup'
+    | '/booking/confirm'
+    | '/food/posted'
+    | '/profile/edit'
+    | '/profile/setup'
+    | '/safety/emergency'
+    | '/settings/notifications'
+    | '/volunteer/dashboard'
+    | '/volunteer/requests'
+    | '/food/details/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ActivityRoute: typeof ActivityRoute
+  BookingsRoute: typeof BookingsRoute
   DiscoverRoute: typeof DiscoverRoute
+  HelpRoute: typeof HelpRoute
   NotificationsRoute: typeof NotificationsRoute
   OnboardingRoute: typeof OnboardingRoute
   PostRoute: typeof PostRoute
-  ProfileRoute: typeof ProfileRoute
+  ProfileRoute: typeof ProfileRouteWithChildren
   SplashRoute: typeof SplashRoute
+  AuthLoginRoute: typeof AuthLoginRoute
+  AuthOtpRoute: typeof AuthOtpRoute
+  AuthSignupRoute: typeof AuthSignupRoute
+  BookingConfirmRoute: typeof BookingConfirmRoute
+  FoodPostedRoute: typeof FoodPostedRoute
+  SafetyEmergencyRoute: typeof SafetyEmergencyRoute
+  SettingsNotificationsRoute: typeof SettingsNotificationsRoute
+  VolunteerDashboardRoute: typeof VolunteerDashboardRoute
+  VolunteerRequestsRoute: typeof VolunteerRequestsRoute
+  FoodDetailsIdRoute: typeof FoodDetailsIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -171,11 +351,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NotificationsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/help': {
+      id: '/help'
+      path: '/help'
+      fullPath: '/help'
+      preLoaderRoute: typeof HelpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/discover': {
       id: '/discover'
       path: '/discover'
       fullPath: '/discover'
       preLoaderRoute: typeof DiscoverRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bookings': {
+      id: '/bookings'
+      path: '/bookings'
+      fullPath: '/bookings'
+      preLoaderRoute: typeof BookingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/activity': {
@@ -192,18 +386,127 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/volunteer/requests': {
+      id: '/volunteer/requests'
+      path: '/volunteer/requests'
+      fullPath: '/volunteer/requests'
+      preLoaderRoute: typeof VolunteerRequestsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/volunteer/dashboard': {
+      id: '/volunteer/dashboard'
+      path: '/volunteer/dashboard'
+      fullPath: '/volunteer/dashboard'
+      preLoaderRoute: typeof VolunteerDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings/notifications': {
+      id: '/settings/notifications'
+      path: '/settings/notifications'
+      fullPath: '/settings/notifications'
+      preLoaderRoute: typeof SettingsNotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/safety/emergency': {
+      id: '/safety/emergency'
+      path: '/safety/emergency'
+      fullPath: '/safety/emergency'
+      preLoaderRoute: typeof SafetyEmergencyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile/setup': {
+      id: '/profile/setup'
+      path: '/setup'
+      fullPath: '/profile/setup'
+      preLoaderRoute: typeof ProfileSetupRouteImport
+      parentRoute: typeof ProfileRoute
+    }
+    '/profile/edit': {
+      id: '/profile/edit'
+      path: '/edit'
+      fullPath: '/profile/edit'
+      preLoaderRoute: typeof ProfileEditRouteImport
+      parentRoute: typeof ProfileRoute
+    }
+    '/food/posted': {
+      id: '/food/posted'
+      path: '/food/posted'
+      fullPath: '/food/posted'
+      preLoaderRoute: typeof FoodPostedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/booking/confirm': {
+      id: '/booking/confirm'
+      path: '/booking/confirm'
+      fullPath: '/booking/confirm'
+      preLoaderRoute: typeof BookingConfirmRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/signup': {
+      id: '/auth/signup'
+      path: '/auth/signup'
+      fullPath: '/auth/signup'
+      preLoaderRoute: typeof AuthSignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/otp': {
+      id: '/auth/otp'
+      path: '/auth/otp'
+      fullPath: '/auth/otp'
+      preLoaderRoute: typeof AuthOtpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/login': {
+      id: '/auth/login'
+      path: '/auth/login'
+      fullPath: '/auth/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/food/details/$id': {
+      id: '/food/details/$id'
+      path: '/food/details/$id'
+      fullPath: '/food/details/$id'
+      preLoaderRoute: typeof FoodDetailsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
+
+interface ProfileRouteChildren {
+  ProfileEditRoute: typeof ProfileEditRoute
+  ProfileSetupRoute: typeof ProfileSetupRoute
+}
+
+const ProfileRouteChildren: ProfileRouteChildren = {
+  ProfileEditRoute: ProfileEditRoute,
+  ProfileSetupRoute: ProfileSetupRoute,
+}
+
+const ProfileRouteWithChildren =
+  ProfileRoute._addFileChildren(ProfileRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ActivityRoute: ActivityRoute,
+  BookingsRoute: BookingsRoute,
   DiscoverRoute: DiscoverRoute,
+  HelpRoute: HelpRoute,
   NotificationsRoute: NotificationsRoute,
   OnboardingRoute: OnboardingRoute,
   PostRoute: PostRoute,
-  ProfileRoute: ProfileRoute,
+  ProfileRoute: ProfileRouteWithChildren,
   SplashRoute: SplashRoute,
+  AuthLoginRoute: AuthLoginRoute,
+  AuthOtpRoute: AuthOtpRoute,
+  AuthSignupRoute: AuthSignupRoute,
+  BookingConfirmRoute: BookingConfirmRoute,
+  FoodPostedRoute: FoodPostedRoute,
+  SafetyEmergencyRoute: SafetyEmergencyRoute,
+  SettingsNotificationsRoute: SettingsNotificationsRoute,
+  VolunteerDashboardRoute: VolunteerDashboardRoute,
+  VolunteerRequestsRoute: VolunteerRequestsRoute,
+  FoodDetailsIdRoute: FoodDetailsIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

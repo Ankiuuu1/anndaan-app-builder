@@ -39,7 +39,7 @@ function Onboarding() {
   const Icon = Slide.icon;
 
   const next = () => {
-    if (last) navigate({ to: "/" });
+    if (last) navigate({ to: "/auth/login" });
     else setStep((s) => s + 1);
   };
 
@@ -48,7 +48,7 @@ function Onboarding() {
       <div className="flex flex-col min-h-screen p-6">
         <div className="flex justify-end">
           <button
-            onClick={() => navigate({ to: "/" })}
+            onClick={() => navigate({ to: "/auth/login" })}
             className="text-sm text-muted-foreground hover:text-foreground"
           >
             Skip
