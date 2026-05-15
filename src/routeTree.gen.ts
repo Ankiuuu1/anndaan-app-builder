@@ -15,13 +15,17 @@ import { Route as PostRouteImport } from './routes/post'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as DiscoverRouteImport } from './routes/discover'
+import { Route as BookingsRouteImport } from './routes/bookings'
 import { Route as ActivityRouteImport } from './routes/activity'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProfileSetupRouteImport } from './routes/profile.setup'
 import { Route as ProfileEditRouteImport } from './routes/profile.edit'
+import { Route as FoodPostedRouteImport } from './routes/food.posted'
+import { Route as BookingConfirmRouteImport } from './routes/booking.confirm'
 import { Route as AuthSignupRouteImport } from './routes/auth.signup'
 import { Route as AuthOtpRouteImport } from './routes/auth.otp'
 import { Route as AuthLoginRouteImport } from './routes/auth.login'
+import { Route as FoodDetailsIdRouteImport } from './routes/food.details.$id'
 
 const SplashRoute = SplashRouteImport.update({
   id: '/splash',
@@ -53,6 +57,11 @@ const DiscoverRoute = DiscoverRouteImport.update({
   path: '/discover',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BookingsRoute = BookingsRouteImport.update({
+  id: '/bookings',
+  path: '/bookings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ActivityRoute = ActivityRouteImport.update({
   id: '/activity',
   path: '/activity',
@@ -73,6 +82,16 @@ const ProfileEditRoute = ProfileEditRouteImport.update({
   path: '/edit',
   getParentRoute: () => ProfileRoute,
 } as any)
+const FoodPostedRoute = FoodPostedRouteImport.update({
+  id: '/food/posted',
+  path: '/food/posted',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookingConfirmRoute = BookingConfirmRouteImport.update({
+  id: '/booking/confirm',
+  path: '/booking/confirm',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthSignupRoute = AuthSignupRouteImport.update({
   id: '/auth/signup',
   path: '/auth/signup',
@@ -88,10 +107,16 @@ const AuthLoginRoute = AuthLoginRouteImport.update({
   path: '/auth/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FoodDetailsIdRoute = FoodDetailsIdRouteImport.update({
+  id: '/food/details/$id',
+  path: '/food/details/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/activity': typeof ActivityRoute
+  '/bookings': typeof BookingsRoute
   '/discover': typeof DiscoverRoute
   '/notifications': typeof NotificationsRoute
   '/onboarding': typeof OnboardingRoute
@@ -101,12 +126,16 @@ export interface FileRoutesByFullPath {
   '/auth/login': typeof AuthLoginRoute
   '/auth/otp': typeof AuthOtpRoute
   '/auth/signup': typeof AuthSignupRoute
+  '/booking/confirm': typeof BookingConfirmRoute
+  '/food/posted': typeof FoodPostedRoute
   '/profile/edit': typeof ProfileEditRoute
   '/profile/setup': typeof ProfileSetupRoute
+  '/food/details/$id': typeof FoodDetailsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/activity': typeof ActivityRoute
+  '/bookings': typeof BookingsRoute
   '/discover': typeof DiscoverRoute
   '/notifications': typeof NotificationsRoute
   '/onboarding': typeof OnboardingRoute
@@ -116,13 +145,17 @@ export interface FileRoutesByTo {
   '/auth/login': typeof AuthLoginRoute
   '/auth/otp': typeof AuthOtpRoute
   '/auth/signup': typeof AuthSignupRoute
+  '/booking/confirm': typeof BookingConfirmRoute
+  '/food/posted': typeof FoodPostedRoute
   '/profile/edit': typeof ProfileEditRoute
   '/profile/setup': typeof ProfileSetupRoute
+  '/food/details/$id': typeof FoodDetailsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/activity': typeof ActivityRoute
+  '/bookings': typeof BookingsRoute
   '/discover': typeof DiscoverRoute
   '/notifications': typeof NotificationsRoute
   '/onboarding': typeof OnboardingRoute
@@ -132,14 +165,18 @@ export interface FileRoutesById {
   '/auth/login': typeof AuthLoginRoute
   '/auth/otp': typeof AuthOtpRoute
   '/auth/signup': typeof AuthSignupRoute
+  '/booking/confirm': typeof BookingConfirmRoute
+  '/food/posted': typeof FoodPostedRoute
   '/profile/edit': typeof ProfileEditRoute
   '/profile/setup': typeof ProfileSetupRoute
+  '/food/details/$id': typeof FoodDetailsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/activity'
+    | '/bookings'
     | '/discover'
     | '/notifications'
     | '/onboarding'
@@ -149,12 +186,16 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/auth/otp'
     | '/auth/signup'
+    | '/booking/confirm'
+    | '/food/posted'
     | '/profile/edit'
     | '/profile/setup'
+    | '/food/details/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/activity'
+    | '/bookings'
     | '/discover'
     | '/notifications'
     | '/onboarding'
@@ -164,12 +205,16 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/auth/otp'
     | '/auth/signup'
+    | '/booking/confirm'
+    | '/food/posted'
     | '/profile/edit'
     | '/profile/setup'
+    | '/food/details/$id'
   id:
     | '__root__'
     | '/'
     | '/activity'
+    | '/bookings'
     | '/discover'
     | '/notifications'
     | '/onboarding'
@@ -179,13 +224,17 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/auth/otp'
     | '/auth/signup'
+    | '/booking/confirm'
+    | '/food/posted'
     | '/profile/edit'
     | '/profile/setup'
+    | '/food/details/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ActivityRoute: typeof ActivityRoute
+  BookingsRoute: typeof BookingsRoute
   DiscoverRoute: typeof DiscoverRoute
   NotificationsRoute: typeof NotificationsRoute
   OnboardingRoute: typeof OnboardingRoute
@@ -195,6 +244,9 @@ export interface RootRouteChildren {
   AuthLoginRoute: typeof AuthLoginRoute
   AuthOtpRoute: typeof AuthOtpRoute
   AuthSignupRoute: typeof AuthSignupRoute
+  BookingConfirmRoute: typeof BookingConfirmRoute
+  FoodPostedRoute: typeof FoodPostedRoute
+  FoodDetailsIdRoute: typeof FoodDetailsIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -241,6 +293,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DiscoverRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/bookings': {
+      id: '/bookings'
+      path: '/bookings'
+      fullPath: '/bookings'
+      preLoaderRoute: typeof BookingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/activity': {
       id: '/activity'
       path: '/activity'
@@ -269,6 +328,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileEditRouteImport
       parentRoute: typeof ProfileRoute
     }
+    '/food/posted': {
+      id: '/food/posted'
+      path: '/food/posted'
+      fullPath: '/food/posted'
+      preLoaderRoute: typeof FoodPostedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/booking/confirm': {
+      id: '/booking/confirm'
+      path: '/booking/confirm'
+      fullPath: '/booking/confirm'
+      preLoaderRoute: typeof BookingConfirmRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth/signup': {
       id: '/auth/signup'
       path: '/auth/signup'
@@ -290,6 +363,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/food/details/$id': {
+      id: '/food/details/$id'
+      path: '/food/details/$id'
+      fullPath: '/food/details/$id'
+      preLoaderRoute: typeof FoodDetailsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -309,6 +389,7 @@ const ProfileRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ActivityRoute: ActivityRoute,
+  BookingsRoute: BookingsRoute,
   DiscoverRoute: DiscoverRoute,
   NotificationsRoute: NotificationsRoute,
   OnboardingRoute: OnboardingRoute,
@@ -318,6 +399,9 @@ const rootRouteChildren: RootRouteChildren = {
   AuthLoginRoute: AuthLoginRoute,
   AuthOtpRoute: AuthOtpRoute,
   AuthSignupRoute: AuthSignupRoute,
+  BookingConfirmRoute: BookingConfirmRoute,
+  FoodPostedRoute: FoodPostedRoute,
+  FoodDetailsIdRoute: FoodDetailsIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
