@@ -14,6 +14,146 @@ export type Database = {
   }
   public: {
     Tables: {
+      bookings: {
+        Row: {
+          created_at: string
+          food_item_id: string
+          id: string
+          notes: string | null
+          pickup_window_end: string | null
+          pickup_window_start: string | null
+          recipient_id: string
+          status: Database["public"]["Enums"]["booking_status"]
+          updated_at: string
+          volunteer_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          food_item_id: string
+          id?: string
+          notes?: string | null
+          pickup_window_end?: string | null
+          pickup_window_start?: string | null
+          recipient_id: string
+          status?: Database["public"]["Enums"]["booking_status"]
+          updated_at?: string
+          volunteer_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          food_item_id?: string
+          id?: string
+          notes?: string | null
+          pickup_window_end?: string | null
+          pickup_window_start?: string | null
+          recipient_id?: string
+          status?: Database["public"]["Enums"]["booking_status"]
+          updated_at?: string
+          volunteer_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_food_item_id_fkey"
+            columns: ["food_item_id"]
+            isOneToOne: false
+            referencedRelation: "food_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      food_items: {
+        Row: {
+          category: Database["public"]["Enums"]["food_category"]
+          created_at: string
+          cuisine: string | null
+          description: string | null
+          donor_id: string
+          expires_at: string
+          id: string
+          instructions: string | null
+          lat: number | null
+          lng: number | null
+          photo_url: string | null
+          pickup_address: string
+          prepared_at: string
+          quantity_servings: number
+          status: Database["public"]["Enums"]["food_status"]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: Database["public"]["Enums"]["food_category"]
+          created_at?: string
+          cuisine?: string | null
+          description?: string | null
+          donor_id: string
+          expires_at: string
+          id?: string
+          instructions?: string | null
+          lat?: number | null
+          lng?: number | null
+          photo_url?: string | null
+          pickup_address: string
+          prepared_at?: string
+          quantity_servings?: number
+          status?: Database["public"]["Enums"]["food_status"]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["food_category"]
+          created_at?: string
+          cuisine?: string | null
+          description?: string | null
+          donor_id?: string
+          expires_at?: string
+          id?: string
+          instructions?: string | null
+          lat?: number | null
+          lng?: number | null
+          photo_url?: string | null
+          pickup_address?: string
+          prepared_at?: string
+          quantity_servings?: number
+          status?: Database["public"]["Enums"]["food_status"]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          body: string | null
+          created_at: string
+          data: Json | null
+          id: string
+          read_at: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          data?: Json | null
+          id?: string
+          read_at?: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          data?: Json | null
+          id?: string
+          read_at?: string | null
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           address: string | null
@@ -65,6 +205,44 @@ export type Database = {
         }
         Relationships: []
       }
+      reviews: {
+        Row: {
+          booking_id: string
+          comment: string | null
+          created_at: string
+          id: string
+          rating: number
+          reviewee_id: string
+          reviewer_id: string
+        }
+        Insert: {
+          booking_id: string
+          comment?: string | null
+          created_at?: string
+          id?: string
+          rating: number
+          reviewee_id: string
+          reviewer_id: string
+        }
+        Update: {
+          booking_id?: string
+          comment?: string | null
+          created_at?: string
+          id?: string
+          rating?: number
+          reviewee_id?: string
+          reviewer_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -91,6 +269,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      freshness_score: {
+        Args: { _expires_at: string; _prepared_at: string }
+        Returns: number
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -98,9 +280,47 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_food_donor: {
+        Args: { _food_item_id: string; _user_id: string }
+        Returns: boolean
+      }
+      nearby_food: {
+        Args: { _lat: number; _lng: number; _radius_km?: number }
+        Returns: {
+          category: Database["public"]["Enums"]["food_category"]
+          cuisine: string
+          description: string
+          distance_km: number
+          donor_id: string
+          expires_at: string
+          freshness: number
+          id: string
+          lat: number
+          lng: number
+          photo_url: string
+          pickup_address: string
+          prepared_at: string
+          quantity_servings: number
+          status: Database["public"]["Enums"]["food_status"]
+          title: string
+        }[]
+      }
     }
     Enums: {
       app_role: "donor" | "recipient" | "volunteer" | "ngo" | "admin"
+      booking_status:
+        | "pending"
+        | "confirmed"
+        | "ready"
+        | "picked_up"
+        | "cancelled"
+      food_category: "veg" | "non_veg" | "vegan"
+      food_status:
+        | "available"
+        | "reserved"
+        | "picked_up"
+        | "expired"
+        | "cancelled"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -229,6 +449,21 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["donor", "recipient", "volunteer", "ngo", "admin"],
+      booking_status: [
+        "pending",
+        "confirmed",
+        "ready",
+        "picked_up",
+        "cancelled",
+      ],
+      food_category: ["veg", "non_veg", "vegan"],
+      food_status: [
+        "available",
+        "reserved",
+        "picked_up",
+        "expired",
+        "cancelled",
+      ],
     },
   },
 } as const
