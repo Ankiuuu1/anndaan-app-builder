@@ -1,4 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
+import type { LinkProps } from "@tanstack/react-router";
 import { Home, Search, Plus, Bell, User } from "lucide-react";
 
 type Tab = {
