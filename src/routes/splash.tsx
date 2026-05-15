@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { Sprout } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 export const Route = createFileRoute("/splash")({
   component: SplashScreen,
@@ -8,13 +9,15 @@ export const Route = createFileRoute("/splash")({
 
 function SplashScreen() {
   const navigate = useNavigate();
+  const { user, loading } = useAuth();
 
   useEffect(() => {
+    if (loading) return;
     const t = setTimeout(() => {
-      navigate({ to: "/onboarding" });
-    }, 1800);
+      navigate({ to: user ? "/" : "/onboarding" });
+    }, 1500);
     return () => clearTimeout(t);
-  }, [navigate]);
+  }, [navigate, user, loading]);
 
   return (
     <div className="min-h-screen w-full grid place-items-center bg-gradient-to-br from-primary via-primary to-primary-glow text-primary-foreground">
