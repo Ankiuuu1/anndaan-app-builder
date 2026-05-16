@@ -24,15 +24,15 @@ function Discover() {
   }, []);
 
   const { data: items = [], isLoading } = useQuery({
-    queryKey: ["nearby-food", loc?.lat, loc?.lng],
+    queryKey: ["nearby-food", loc?.lat ?? 0, loc?.lng ?? 0],
     queryFn: async () => {
       const { data, error } = await supabase.rpc("nearby_food", {
-        _lat: loc?.lat ?? null,
-        _lng: loc?.lng ?? null,
+        _lat: loc?.lat ?? 0,
+        _lng: loc?.lng ?? 0,
         _radius_km: 25,
       });
       if (error) throw error;
-      return data;
+      return data ?? [];
     },
   });
 
