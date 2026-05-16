@@ -35,7 +35,11 @@ function PostedFood() {
   });
 
   const remove = async (id: string) => {
-    const { error } = await supabase.from("food_items").update({ status: "cancelled" }).eq("id", id);
+    const { error } = await supabase
+      .from("food_items")
+      .update({ status: "cancelled" })
+      .eq("id", id)
+      .eq("donor_id", user!.id);
     if (error) return toast.error(error.message);
     toast.success("Removed");
     qc.invalidateQueries({ queryKey: ["my-food"] });
