@@ -34,8 +34,26 @@ function OtpVerify() {
     if (ch && i < 5) inputs.current[i + 1]?.focus();
   };
 
-  const verify = () => {
-    if (digits.join("").length === 6) navigate({ to: "/profile/setup" });
+  const verify = async () => {
+    const code = digits.join("");
+    if (code.length !== 6) return;
+    const { error } = await supabase.auth.verifyOtp({ phone, token: code, type: "sms" });
+    if (error) {
+      toast.error(error.message || "Invalid or expired code");
+      return;
+    }
+    navigate({ to: "/profile/setup" });
+  };
+
+  const resend = async () => {
+    if (!phone) return;
+    const { error } = await supabase.auth.signInWithOtp({ phone });
+    if (error) {
+      toast.error(error.message || "Could not resend code");
+      return;
+    }
+    setSeconds(30);
+    toast.success("Code sent");
   };
 
   return (
