@@ -79,10 +79,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "theme-color", content: "#2E7D32" },
       { name: "author", content: "AnnDaan" },
       { property: "og:title", content: "AnnDaan — Save Food, Feed People" },
-      { property: "og:description", content: "Share surplus food, discover nearby donations, and build community impact." },
+      { property: "og:description", content: "AnnDaan connects food donors with recipients and volunteers to fight food waste." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "AnnDaan — Save Food, Feed People" },
+      { name: "twitter:description", content: "AnnDaan connects food donors with recipients and volunteers to fight food waste." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/a347ba94-513b-47c2-8596-3cd1a0db6c3c" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/a347ba94-513b-47c2-8596-3cd1a0db6c3c" },
     ],
     links: [
       {
