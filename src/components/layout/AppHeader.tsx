@@ -1,13 +1,31 @@
 import { Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { Bell } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 
 interface AppHeaderProps {
   title?: string;
-  unreadCount?: number;
 }
 
-export function AppHeader({ title = "AnnDaan", unreadCount = 0 }: AppHeaderProps) {
+export function AppHeader({ title = "AnnDaan" }: AppHeaderProps) {
+  const { user } = useAuth();
+
+  const { data: unreadCount = 0 } = useQuery({
+    queryKey: ["notifications-count", user?.id],
+    enabled: !!user,
+    queryFn: async () => {
+      const { count, error } = await supabase
+        .from("notifications")
+        .select("*", { count: "exact", head: true })
+        .eq("user_id", user!.id)
+        .is("read_at", null);
+      if (error) throw error;
+      return count ?? 0;
+    },
+  });
+
   return (
     <header className="sticky top-0 z-30 flex items-center justify-between bg-background/90 backdrop-blur px-4 h-14 border-b">
       <Link to="/" className="flex items-center gap-2">
@@ -20,11 +38,13 @@ export function AppHeader({ title = "AnnDaan", unreadCount = 0 }: AppHeaderProps
         <Link
           to="/notifications"
           className="relative h-10 w-10 grid place-items-center rounded-full hover:bg-secondary"
-          aria-label="Notifications"
+          aria-label={`Notifications${unreadCount > 0 ? `, ${unreadCount} unread` : ""}`}
         >
           <Bell className="h-5 w-5" />
           {unreadCount > 0 && (
-            <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-accent" />
+            <span className="absolute top-1 right-1 h-4 min-w-4 px-1 rounded-full bg-accent text-[10px] font-bold text-accent-foreground grid place-items-center">
+              {unreadCount > 9 ? "9+" : unreadCount}
+            </span>
           )}
         </Link>
         <Link to="/profile" aria-label="Profile">

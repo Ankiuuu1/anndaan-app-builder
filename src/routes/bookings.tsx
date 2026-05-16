@@ -45,7 +45,11 @@ function Bookings() {
   });
 
   const markPickedUp = async (bookingId: string) => {
-    const { error } = await supabase.from("bookings").update({ status: "picked_up" }).eq("id", bookingId);
+    const { error } = await supabase
+      .from("bookings")
+      .update({ status: "picked_up" })
+      .eq("id", bookingId)
+      .eq("recipient_id", user!.id);
     if (error) return toast.error(error.message);
     toast.success("Marked as picked up");
     qc.invalidateQueries({ queryKey: ["bookings"] });

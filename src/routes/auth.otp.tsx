@@ -1,8 +1,10 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 import { MobileShell } from "@/components/layout/MobileShell";
 import { Button } from "@/components/ui/button";
 import { ScreenHeader } from "@/components/layout/ScreenHeader";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/auth/otp")({
   validateSearch: (s: Record<string, unknown>) => ({
@@ -32,8 +34,26 @@ function OtpVerify() {
     if (ch && i < 5) inputs.current[i + 1]?.focus();
   };
 
-  const verify = () => {
-    if (digits.join("").length === 6) navigate({ to: "/profile/setup" });
+  const verify = async () => {
+    const code = digits.join("");
+    if (code.length !== 6) return;
+    const { error } = await supabase.auth.verifyOtp({ phone, token: code, type: "sms" });
+    if (error) {
+      toast.error(error.message || "Invalid or expired code");
+      return;
+    }
+    navigate({ to: "/profile/setup" });
+  };
+
+  const resend = async () => {
+    if (!phone) return;
+    const { error } = await supabase.auth.signInWithOtp({ phone });
+    if (error) {
+      toast.error(error.message || "Could not resend code");
+      return;
+    }
+    setSeconds(30);
+    toast.success("Code sent");
   };
 
   return (
@@ -67,7 +87,7 @@ function OtpVerify() {
           <div className="flex items-center justify-between mt-6 text-sm">
             <button
               disabled={seconds > 0}
-              onClick={() => setSeconds(30)}
+              onClick={resend}
               className="text-primary font-semibold disabled:text-muted-foreground"
             >
               Resend OTP {seconds > 0 && `(${seconds}s)`}

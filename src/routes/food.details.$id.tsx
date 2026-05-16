@@ -31,7 +31,7 @@ function FoodDetails() {
     queryKey: ["donor", food?.donor_id],
     enabled: !!food?.donor_id,
     queryFn: async () => {
-      const { data } = await supabase.from("profiles").select("full_name, verified, avatar_url").eq("id", food!.donor_id).maybeSingle();
+      const { data } = await supabase.rpc("get_public_profile", { _user_id: food!.donor_id }).maybeSingle();
       return data;
     },
   });

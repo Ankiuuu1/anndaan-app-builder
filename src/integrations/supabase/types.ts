@@ -273,6 +273,15 @@ export type Database = {
         Args: { _expires_at: string; _prepared_at: string }
         Returns: number
       }
+      get_public_profile: {
+        Args: { _user_id: string }
+        Returns: {
+          avatar_url: string
+          full_name: string
+          org_name: string
+          verified: boolean
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

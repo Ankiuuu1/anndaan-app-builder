@@ -1,0 +1,18 @@
+{
+  "name": "AnnDaan",
+  "short_name": "AnnDaan",
+  "description": "Save Food, Feed People — connect donors, recipients, and volunteers to fight food waste.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2E7D32",
+  "orientation": "portrait",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}
