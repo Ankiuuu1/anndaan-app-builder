@@ -87,7 +87,7 @@ function OtpVerify() {
           <div className="flex items-center justify-between mt-6 text-sm">
             <button
               disabled={seconds > 0}
-              onClick={() => setSeconds(30)}
+              onClick={resend}
               className="text-primary font-semibold disabled:text-muted-foreground"
             >
               Resend OTP {seconds > 0 && `(${seconds}s)`}
