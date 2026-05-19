@@ -31,12 +31,12 @@ export function AppHeader({ title = "AnnDaan" }: AppHeaderProps) {
   });
 
   return (
-    <header className="sticky top-0 z-30 flex items-center justify-between bg-background/90 backdrop-blur px-4 h-14 border-b">
+    <header className="sticky top-0 z-30 flex items-center justify-between bg-background/80 backdrop-blur-xl px-4 h-14 border-b border-border/60">
       <Link to="/" className="flex items-center gap-2">
-        <div className="h-8 w-8 rounded-xl bg-primary text-primary-foreground grid place-items-center font-bold">
+        <div className="h-9 w-9 rounded-2xl bg-gradient-to-br from-primary to-primary-glow text-primary-foreground grid place-items-center font-extrabold shadow-[var(--shadow-card)]">
           A
         </div>
-        <span className="font-bold text-base tracking-tight">{title}</span>
+        <span className="font-extrabold text-base tracking-tight">{title}</span>
       </Link>
       <div className="flex items-center gap-2">
         <button

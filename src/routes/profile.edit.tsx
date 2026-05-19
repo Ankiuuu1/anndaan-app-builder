@@ -42,13 +42,16 @@ function EditProfile() {
     setSaving(true);
     const { error } = await supabase
       .from("profiles")
-      .update({
-        full_name: fullName,
-        phone,
-        address,
-        org_name: orgName || null,
-      })
-      .eq("id", user.id);
+      .upsert(
+        {
+          id: user.id,
+          full_name: fullName,
+          phone,
+          address,
+          org_name: orgName || null,
+        },
+        { onConflict: "id" },
+      );
     setSaving(false);
     if (error) {
       toast.error(error.message);
