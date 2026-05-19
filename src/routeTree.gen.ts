@@ -103,14 +103,14 @@ const SafetyEmergencyRoute = SafetyEmergencyRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProfileSetupRoute = ProfileSetupRouteImport.update({
-  id: '/setup',
-  path: '/setup',
-  getParentRoute: () => ProfileRoute,
+  id: '/profile/setup',
+  path: '/profile/setup',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ProfileEditRoute = ProfileEditRouteImport.update({
-  id: '/edit',
-  path: '/edit',
-  getParentRoute: () => ProfileRoute,
+  id: '/profile/edit',
+  path: '/profile/edit',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const FoodPostedRoute = FoodPostedRouteImport.update({
   id: '/food/posted',
@@ -306,6 +306,8 @@ export interface RootRouteChildren {
   AuthSignupRoute: typeof AuthSignupRoute
   BookingConfirmRoute: typeof BookingConfirmRoute
   FoodPostedRoute: typeof FoodPostedRoute
+  ProfileEditRoute: typeof ProfileEditRoute
+  ProfileSetupRoute: typeof ProfileSetupRoute
   SafetyEmergencyRoute: typeof SafetyEmergencyRoute
   SettingsNotificationsRoute: typeof SettingsNotificationsRoute
   VolunteerDashboardRoute: typeof VolunteerDashboardRoute
@@ -416,17 +418,17 @@ declare module '@tanstack/react-router' {
     }
     '/profile/setup': {
       id: '/profile/setup'
-      path: '/setup'
+      path: '/profile/setup'
       fullPath: '/profile/setup'
       preLoaderRoute: typeof ProfileSetupRouteImport
-      parentRoute: typeof ProfileRoute
+      parentRoute: typeof rootRouteImport
     }
     '/profile/edit': {
       id: '/profile/edit'
-      path: '/edit'
+      path: '/profile/edit'
       fullPath: '/profile/edit'
       preLoaderRoute: typeof ProfileEditRouteImport
-      parentRoute: typeof ProfileRoute
+      parentRoute: typeof rootRouteImport
     }
     '/food/posted': {
       id: '/food/posted'
@@ -488,6 +490,8 @@ const rootRouteChildren: RootRouteChildren = {
   AuthSignupRoute: AuthSignupRoute,
   BookingConfirmRoute: BookingConfirmRoute,
   FoodPostedRoute: FoodPostedRoute,
+  ProfileEditRoute: ProfileEditRoute,
+  ProfileSetupRoute: ProfileSetupRoute,
   SafetyEmergencyRoute: SafetyEmergencyRoute,
   SettingsNotificationsRoute: SettingsNotificationsRoute,
   VolunteerDashboardRoute: VolunteerDashboardRoute,
