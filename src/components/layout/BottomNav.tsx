@@ -50,8 +50,10 @@ export function BottomNav() {
               active ? "text-primary" : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            <Icon className="h-5 w-5" />
-            {label}
+            <span className={`grid place-items-center h-9 w-12 rounded-full transition-colors ${active ? "bg-primary/10" : ""}`}>
+              <Icon className="h-5 w-5" />
+            </span>
+            <span className="leading-none">{label}</span>
           </Link>
         );
       })}
