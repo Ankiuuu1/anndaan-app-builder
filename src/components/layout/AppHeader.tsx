@@ -39,6 +39,15 @@ export function AppHeader({ title = "AnnDaan" }: AppHeaderProps) {
         <span className="font-bold text-base tracking-tight">{title}</span>
       </Link>
       <div className="flex items-center gap-2">
+        <button
+          type="button"
+          onClick={toggle}
+          aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          className="h-10 w-10 grid place-items-center rounded-full hover:bg-secondary"
+        >
+          {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+        </button>
+
         <Link
           to="/notifications"
           className="relative h-10 w-10 grid place-items-center rounded-full hover:bg-secondary"
