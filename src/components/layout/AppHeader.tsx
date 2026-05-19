@@ -1,9 +1,11 @@
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { Bell } from "lucide-react";
+import { Bell, Moon, Sun } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useAuth } from "@/hooks/useAuth";
+import { useTheme } from "@/hooks/useTheme";
 import { supabase } from "@/integrations/supabase/client";
+
 
 interface AppHeaderProps {
   title?: string;
@@ -11,6 +13,8 @@ interface AppHeaderProps {
 
 export function AppHeader({ title = "AnnDaan" }: AppHeaderProps) {
   const { user } = useAuth();
+  const { theme, toggle } = useTheme();
+
 
   const { data: unreadCount = 0 } = useQuery({
     queryKey: ["notifications-count", user?.id],
@@ -35,6 +39,15 @@ export function AppHeader({ title = "AnnDaan" }: AppHeaderProps) {
         <span className="font-bold text-base tracking-tight">{title}</span>
       </Link>
       <div className="flex items-center gap-2">
+        <button
+          type="button"
+          onClick={toggle}
+          aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          className="h-10 w-10 grid place-items-center rounded-full hover:bg-secondary"
+        >
+          {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+        </button>
+
         <Link
           to="/notifications"
           className="relative h-10 w-10 grid place-items-center rounded-full hover:bg-secondary"
