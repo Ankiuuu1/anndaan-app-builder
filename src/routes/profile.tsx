@@ -93,15 +93,21 @@ function Profile() {
           </div>
         </Card>
 
-        <Card className="divide-y shadow-[var(--shadow-card)]">
+        <Card className="divide-y shadow-[var(--shadow-card)] overflow-hidden">
           {menu.map(({ icon: Icon, label, to }) => (
-            <Link key={label} to={to} className="flex items-center gap-3 p-4 hover:bg-secondary/50">
+            <button
+              key={label}
+              type="button"
+              onClick={() => navigate({ to })}
+              className="w-full flex items-center gap-3 p-4 hover:bg-secondary/50 text-left"
+            >
               <Icon className="h-4 w-4 text-muted-foreground" />
               <span className="flex-1 text-sm font-medium">{label}</span>
               <ChevronRight className="h-4 w-4 text-muted-foreground" />
-            </Link>
+            </button>
           ))}
         </Card>
+
 
         <Button variant="outline" onClick={handleLogout} className="w-full h-11 rounded-xl text-destructive border-destructive/30 hover:bg-destructive/5">
           <LogOut className="h-4 w-4 mr-2" /> Log out
