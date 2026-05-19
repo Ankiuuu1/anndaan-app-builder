@@ -13,6 +13,8 @@ interface AppHeaderProps {
 
 export function AppHeader({ title = "AnnDaan" }: AppHeaderProps) {
   const { user } = useAuth();
+  const { theme, toggle } = useTheme();
+
 
   const { data: unreadCount = 0 } = useQuery({
     queryKey: ["notifications-count", user?.id],
