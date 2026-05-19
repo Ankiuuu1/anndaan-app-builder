@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SplashRouteImport } from './routes/splash'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PostRouteImport } from './routes/post'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as NotificationsRouteImport } from './routes/notifications'
@@ -18,7 +19,6 @@ import { Route as DiscoverRouteImport } from './routes/discover'
 import { Route as BookingsRouteImport } from './routes/bookings'
 import { Route as ActivityRouteImport } from './routes/activity'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ProfileIndexRouteImport } from './routes/profile.index'
 import { Route as VolunteerRequestsRouteImport } from './routes/volunteer.requests'
 import { Route as VolunteerDashboardRouteImport } from './routes/volunteer.dashboard'
 import { Route as SettingsNotificationsRouteImport } from './routes/settings.notifications'
@@ -35,6 +35,11 @@ import { Route as FoodDetailsIdRouteImport } from './routes/food.details.$id'
 const SplashRoute = SplashRouteImport.update({
   id: '/splash',
   path: '/splash',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PostRoute = PostRouteImport.update({
@@ -77,11 +82,6 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProfileIndexRoute = ProfileIndexRouteImport.update({
-  id: '/profile/',
-  path: '/profile/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const VolunteerRequestsRoute = VolunteerRequestsRouteImport.update({
   id: '/volunteer/requests',
   path: '/volunteer/requests',
@@ -103,14 +103,14 @@ const SafetyEmergencyRoute = SafetyEmergencyRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProfileSetupRoute = ProfileSetupRouteImport.update({
-  id: '/profile/setup',
-  path: '/profile/setup',
-  getParentRoute: () => rootRouteImport,
+  id: '/setup',
+  path: '/setup',
+  getParentRoute: () => ProfileRoute,
 } as any)
 const ProfileEditRoute = ProfileEditRouteImport.update({
-  id: '/profile/edit',
-  path: '/profile/edit',
-  getParentRoute: () => rootRouteImport,
+  id: '/edit',
+  path: '/edit',
+  getParentRoute: () => ProfileRoute,
 } as any)
 const FoodPostedRoute = FoodPostedRouteImport.update({
   id: '/food/posted',
@@ -152,6 +152,7 @@ export interface FileRoutesByFullPath {
   '/notifications': typeof NotificationsRoute
   '/onboarding': typeof OnboardingRoute
   '/post': typeof PostRoute
+  '/profile': typeof ProfileRouteWithChildren
   '/splash': typeof SplashRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/otp': typeof AuthOtpRoute
@@ -164,7 +165,6 @@ export interface FileRoutesByFullPath {
   '/settings/notifications': typeof SettingsNotificationsRoute
   '/volunteer/dashboard': typeof VolunteerDashboardRoute
   '/volunteer/requests': typeof VolunteerRequestsRoute
-  '/profile/': typeof ProfileIndexRoute
   '/food/details/$id': typeof FoodDetailsIdRoute
 }
 export interface FileRoutesByTo {
@@ -176,6 +176,7 @@ export interface FileRoutesByTo {
   '/notifications': typeof NotificationsRoute
   '/onboarding': typeof OnboardingRoute
   '/post': typeof PostRoute
+  '/profile': typeof ProfileRouteWithChildren
   '/splash': typeof SplashRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/otp': typeof AuthOtpRoute
@@ -188,7 +189,6 @@ export interface FileRoutesByTo {
   '/settings/notifications': typeof SettingsNotificationsRoute
   '/volunteer/dashboard': typeof VolunteerDashboardRoute
   '/volunteer/requests': typeof VolunteerRequestsRoute
-  '/profile': typeof ProfileIndexRoute
   '/food/details/$id': typeof FoodDetailsIdRoute
 }
 export interface FileRoutesById {
@@ -201,6 +201,7 @@ export interface FileRoutesById {
   '/notifications': typeof NotificationsRoute
   '/onboarding': typeof OnboardingRoute
   '/post': typeof PostRoute
+  '/profile': typeof ProfileRouteWithChildren
   '/splash': typeof SplashRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/otp': typeof AuthOtpRoute
@@ -213,7 +214,6 @@ export interface FileRoutesById {
   '/settings/notifications': typeof SettingsNotificationsRoute
   '/volunteer/dashboard': typeof VolunteerDashboardRoute
   '/volunteer/requests': typeof VolunteerRequestsRoute
-  '/profile/': typeof ProfileIndexRoute
   '/food/details/$id': typeof FoodDetailsIdRoute
 }
 export interface FileRouteTypes {
@@ -227,6 +227,7 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/onboarding'
     | '/post'
+    | '/profile'
     | '/splash'
     | '/auth/login'
     | '/auth/otp'
@@ -239,7 +240,6 @@ export interface FileRouteTypes {
     | '/settings/notifications'
     | '/volunteer/dashboard'
     | '/volunteer/requests'
-    | '/profile/'
     | '/food/details/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -251,6 +251,7 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/onboarding'
     | '/post'
+    | '/profile'
     | '/splash'
     | '/auth/login'
     | '/auth/otp'
@@ -263,7 +264,6 @@ export interface FileRouteTypes {
     | '/settings/notifications'
     | '/volunteer/dashboard'
     | '/volunteer/requests'
-    | '/profile'
     | '/food/details/$id'
   id:
     | '__root__'
@@ -275,6 +275,7 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/onboarding'
     | '/post'
+    | '/profile'
     | '/splash'
     | '/auth/login'
     | '/auth/otp'
@@ -287,7 +288,6 @@ export interface FileRouteTypes {
     | '/settings/notifications'
     | '/volunteer/dashboard'
     | '/volunteer/requests'
-    | '/profile/'
     | '/food/details/$id'
   fileRoutesById: FileRoutesById
 }
@@ -300,19 +300,17 @@ export interface RootRouteChildren {
   NotificationsRoute: typeof NotificationsRoute
   OnboardingRoute: typeof OnboardingRoute
   PostRoute: typeof PostRoute
+  ProfileRoute: typeof ProfileRouteWithChildren
   SplashRoute: typeof SplashRoute
   AuthLoginRoute: typeof AuthLoginRoute
   AuthOtpRoute: typeof AuthOtpRoute
   AuthSignupRoute: typeof AuthSignupRoute
   BookingConfirmRoute: typeof BookingConfirmRoute
   FoodPostedRoute: typeof FoodPostedRoute
-  ProfileEditRoute: typeof ProfileEditRoute
-  ProfileSetupRoute: typeof ProfileSetupRoute
   SafetyEmergencyRoute: typeof SafetyEmergencyRoute
   SettingsNotificationsRoute: typeof SettingsNotificationsRoute
   VolunteerDashboardRoute: typeof VolunteerDashboardRoute
   VolunteerRequestsRoute: typeof VolunteerRequestsRoute
-  ProfileIndexRoute: typeof ProfileIndexRoute
   FoodDetailsIdRoute: typeof FoodDetailsIdRoute
 }
 
@@ -323,6 +321,13 @@ declare module '@tanstack/react-router' {
       path: '/splash'
       fullPath: '/splash'
       preLoaderRoute: typeof SplashRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/post': {
@@ -381,13 +386,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/profile/': {
-      id: '/profile/'
-      path: '/profile'
-      fullPath: '/profile/'
-      preLoaderRoute: typeof ProfileIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/volunteer/requests': {
       id: '/volunteer/requests'
       path: '/volunteer/requests'
@@ -418,17 +416,17 @@ declare module '@tanstack/react-router' {
     }
     '/profile/setup': {
       id: '/profile/setup'
-      path: '/profile/setup'
+      path: '/setup'
       fullPath: '/profile/setup'
       preLoaderRoute: typeof ProfileSetupRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ProfileRoute
     }
     '/profile/edit': {
       id: '/profile/edit'
-      path: '/profile/edit'
+      path: '/edit'
       fullPath: '/profile/edit'
       preLoaderRoute: typeof ProfileEditRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ProfileRoute
     }
     '/food/posted': {
       id: '/food/posted'
@@ -475,6 +473,19 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface ProfileRouteChildren {
+  ProfileEditRoute: typeof ProfileEditRoute
+  ProfileSetupRoute: typeof ProfileSetupRoute
+}
+
+const ProfileRouteChildren: ProfileRouteChildren = {
+  ProfileEditRoute: ProfileEditRoute,
+  ProfileSetupRoute: ProfileSetupRoute,
+}
+
+const ProfileRouteWithChildren =
+  ProfileRoute._addFileChildren(ProfileRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ActivityRoute: ActivityRoute,
@@ -484,31 +495,19 @@ const rootRouteChildren: RootRouteChildren = {
   NotificationsRoute: NotificationsRoute,
   OnboardingRoute: OnboardingRoute,
   PostRoute: PostRoute,
+  ProfileRoute: ProfileRouteWithChildren,
   SplashRoute: SplashRoute,
   AuthLoginRoute: AuthLoginRoute,
   AuthOtpRoute: AuthOtpRoute,
   AuthSignupRoute: AuthSignupRoute,
   BookingConfirmRoute: BookingConfirmRoute,
   FoodPostedRoute: FoodPostedRoute,
-  ProfileEditRoute: ProfileEditRoute,
-  ProfileSetupRoute: ProfileSetupRoute,
   SafetyEmergencyRoute: SafetyEmergencyRoute,
   SettingsNotificationsRoute: SettingsNotificationsRoute,
   VolunteerDashboardRoute: VolunteerDashboardRoute,
   VolunteerRequestsRoute: VolunteerRequestsRoute,
-  ProfileIndexRoute: ProfileIndexRoute,
   FoodDetailsIdRoute: FoodDetailsIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
